@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ getObservable().getParent().getType() }} Inner Observable</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p class="code">{{ getObservable().getParent().getArgsText() }}</p>
+  <div class="dashboard-pipeline-card-box" style="font-size: 14px;">
+    <div class="card-body dashboard-pipeline-card-body">
+      <div style="margin-bottom: 12px;">
+        <app-pipeline-source [observable]="getObservable()"></app-pipeline-source>
+      </div>
+      <ng-container *ngFor="let operator of getOperators()">
+        <div style="margin-bottom: 12px;">
+          <app-operator [operator]="operator" (eventResumed)="onEventResumed($event)"></app-operator>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

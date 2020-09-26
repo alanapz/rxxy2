@@ -1,0 +1,28 @@
+<div style="width: 100%; margin-bottom: 30px;">
+  <ngb-accordion [closeOthers]="true" activeIds="panel-pipeline-source" #panelAccordion>
+    <ngb-panel id="panel-pipeline-source">
+      <ng-template ngbPanelTitle>
+        <span><app-bootstrap-icon iconName="bi-diagram-2" iconSize="2em" style="margin-right: 1em;"></app-bootstrap-icon>Source</span>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div style="width: 25%; float: left;">
+          <p>Enter parseable input (or click "Load Template" to load a prefined template) :</p>
+          <p>(For technical reasons, EMPTY is not supported - please use empty())</p>
+        </div>
+        <div style="width: 75%; float: left;">
+          <div style="margin-bottom: 1rem; border: 1px solid #ccc;">
+            <ngx-codemirror #codeMirror [(ngModel)]="value" (ngModelChange)="notifyValueChanged()" [options]="{ lineNumbers: true, theme: 'default', mode: 'javascript'}"></ngx-codemirror>
+          </div>
+          <div>
+            <ngb-alert *ngIf="errorMessage" type="danger" [dismissible]="false">{{ errorMessage }}</ngb-alert>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary" [disabled]="!canSubmitValue()" (click)="submitValue()" style="margin-right: 1rem;">Submit</button>
+            <button type="button" class="btn btn-info" (click)="applyTemplate()">Load Template</button>
+          </div>
+        </div>
+        <div style="clear: both;"></div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>

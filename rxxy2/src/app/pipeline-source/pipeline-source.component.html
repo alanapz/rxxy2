@@ -1,0 +1,16 @@
+<ngb-accordion [activeIds]="(isTopLevelObservable() ? 'panel-first' : '')">
+  <ngb-panel id="panel-first">
+    <ng-template ngbPanelTitle>
+      <span>
+        <app-bootstrap-icon iconName="bi-broadcast" iconSize="1.5em" style="margin-right: 0.5rem;"></app-bootstrap-icon>
+        {{ getType() }} ({{getEvents().length}} events)
+        <a href="{{ getHelpUrl() }}" target="_blank"><app-bootstrap-icon iconName="bi-question-circle-fill" style="margin-left: 0.5rem;"></app-bootstrap-icon></a>
+      </span>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <p class="code">{{ getText() }}</p>
+      <hr *ngIf="getEvents().length" />
+      <app-pipeline-event-list [events]="getEvents()"></app-pipeline-event-list>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

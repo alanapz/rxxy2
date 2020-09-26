@@ -1,0 +1,57 @@
+<ng-container *ngFor="let event of getEvents()">
+  <div style="float: left; width: 10%; text-align: left; padding-top: 0.75rem;">
+    <ng-container *ngIf="(event.type === 'in' || event.type === 'out')">
+      <span [style.color]="(event.type === 'in' ? 'DarkOrange' : 'purple')">
+        <app-bootstrap-icon [iconName]="(event.type === 'in' ? 'bi-box-arrow-in-right' : 'bi-box-arrow-right')" [iconSize]="(event.type === 'in' ? '2em' : '1.75em')"></app-bootstrap-icon>
+      </span>
+    </ng-container>
+  </div>
+  <div style="float: left; width: 90%;">
+    <ng-container *ngIf="(event.type === 'in' || event.type === 'out') && event.isNext">
+      <div class="alert alert-primary alert-skinny event-type-{{event.type}}" role="alert">
+        <app-bootstrap-icon iconName="bi-check-circle-fill" iconSize="1.5em" style="margin-right: 0.5em;"></app-bootstrap-icon>
+        <ng-container [ngSwitch]="(isSubject() ? 'subject' : event.type)">
+          <ng-container *ngSwitchCase="'subject'">next({{event.value}})</ng-container>
+          <ng-container *ngSwitchCase="'in'">{{ formatValue(event.value) }} received</ng-container>
+          <ng-container *ngSwitchCase="'out'">{{ formatValue(event.value) }} emitted</ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(event.type === 'in' || event.type === 'out') && event.isError">
+      <div class="alert alert-danger alert-skinny event-type-{{event.type}}" role="alert">
+        <app-bootstrap-icon iconName="bi-exclamation-circle-fill" iconSize="1.5em" style="margin-right: 0.25em;"></app-bootstrap-icon>
+        <ng-container [ngSwitch]="(isSubject() ? 'subject' : event.type)">
+          <ng-container *ngSwitchCase="'subject'">error({{event.error}})</ng-container>
+          <ng-container *ngSwitchCase="'in'">'{{ formatValue(event.error) }}' received</ng-container>
+          <ng-container *ngSwitchCase="'out'">'{{ formatValue(event.error) }}' emitted</ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="(event.type === 'in' || event.type === 'out') && event.isComplete">
+      <div class="alert alert-success alert-skinny event-type-{{event.type}}" role="alert">
+        <app-bootstrap-icon iconName="bi-flag-fill" iconSize="1.5em" style="margin-right: 0.25em"></app-bootstrap-icon>
+        <ng-container [ngSwitch]="(isSubject() ? 'subject' : event.type)">
+          <ng-container *ngSwitchCase="'subject'">complete();</ng-container>
+          <ng-container *ngSwitchCase="'in'">Complete received</ng-container>
+          <ng-container *ngSwitchCase="'out'">Complete emitted</ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="event.type === 'inner' && event.observable.getOperators().length">
+      <button class="btn btn-sm {{ event.observable.isPaused() ? 'btn-warning' : 'btn-secondary' }} btn-block btn-inner-observable" (click)="showInnerObservable(event)">
+        <p>{{ event.observable.getArgsText() }}</p>
+        <ng-container *ngIf="event.observable.isPaused()">(Paused)</ng-container>
+        <app-bootstrap-icon iconName="bi-zoom-in" iconSize="1.5em" style="margin-left: 0.25em;"></app-bootstrap-icon>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="event.type === 'pause'">
+      <button class="btn btn-sm btn-warning btn-block btn-inner-observable" (click)="resumeEvent(event)">
+        <app-bootstrap-icon iconName="bi-play-fill" iconSize="1.5em" style="margin-left: 0.25em;"></app-bootstrap-icon>
+            <ng-container *ngIf="event.isNext">{{ formatValue(event.value)}}</ng-container>
+            <ng-container *ngIf="event.isError">Paused on error: {{event.error}})</ng-container>
+            <ng-container *ngIf="event.isComplete">Paused on complete</ng-container>
+      </button>
+    </ng-container>
+  </div>
+  <div style="clear: both;"></div>
+</ng-container>

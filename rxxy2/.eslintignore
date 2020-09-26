@@ -1,0 +1,10 @@
+*.js
+*.html
+*.scss
+/src/app/**/*.spec.ts
+/src/app/shared/test/*.ts
+/src/environments/*.ts
+/src/main.ts
+/src/polyfills.ts
+/src/test.ts
+/src/typings.d.ts

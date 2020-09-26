@@ -1,0 +1,19 @@
+<ngb-accordion activeIds="panel-first">
+  <ngb-panel id="panel-first">
+    <ng-template ngbPanelTitle>
+      <span>
+        <app-bootstrap-icon iconName="bi-eye-fill" iconSize="1.5em" style="margin-right: 0.5rem;"></app-bootstrap-icon>
+        Observer ({{getEvents().length}} events)
+        <a href="https://rxjs-dev.firebaseapp.com/guide/observer" target="_blank"><app-bootstrap-icon iconName="bi-question-circle-fill" style="margin-left: 0.5rem;"></app-bootstrap-icon></a>
+      </span>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <p class="code">{{ getText() }}</p>
+      <p *ngIf="getDescription()" style="margin-top: 16px;" [innerHTML]="getDescription()"></p>
+      <hr *ngIf="getEvents().length" />
+      <app-pipeline-event-list [events]="getEvents()"></app-pipeline-event-list>
+      <p *ngIf="getDescription2()" style="margin-top: 16px;" [innerHTML]="getDescription2()"></p>
+      <p *ngIf="getPostCompleteText()" style="margin-top: 16px;" [innerHTML]="getPostCompleteText()"></p>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

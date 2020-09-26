@@ -1,0 +1,52 @@
+<div class="dashboard-pipeline-card-box" cdkDrag>
+  <div class="card-body dashboard-pipeline-card-body">
+    <div style="float: left;">
+      <h5 class="card-title">
+        <app-bootstrap-icon iconName="bi-minecart-loaded" iconSize="1.5em" style="margin-right: 0.75em;"></app-bootstrap-icon>
+        <span>{{ getTitle() }}</span>
+      </h5>
+    </div>
+    <div style="float: right;">
+      <button *ngIf="canStartPipeline()" class="btn btn-success" (click)="startPipeline(false)" style="margin: 0 0.5em 0 0.5em;">
+        <app-bootstrap-icon iconName="bi-play-fill" iconSize="1.5em"></app-bootstrap-icon>
+        Run
+      </button>
+      <button *ngIf="canStartPipeline()" class="btn btn-primary" (click)="startPipeline(true)" style="margin: 0 0.5em 0 0.5em;">
+        <app-bootstrap-icon iconName="bi-skip-end-fill" iconSize="1.5em"></app-bootstrap-icon>
+        Run All
+      </button>
+      <button *ngIf="canAdvancePipeline()" class="btn btn-success" (click)="advancePipeline()" style="margin: 0 0.5em 0 0.5em;">
+        <app-bootstrap-icon iconName="bi-play-fill" iconSize="1.5em"></app-bootstrap-icon>
+        Advance
+      </button>
+      <button *ngIf="canFastForwardPipeline()" class="btn btn-primary" (click)="fastForwardPipeline()" style="margin: 0 0.5em 0 0.5em;">
+        <app-bootstrap-icon iconName="bi-skip-end-fill" iconSize="1.5em"></app-bootstrap-icon>
+        Run All
+      </button>
+      <button *ngIf="canStopPipeline()" class="btn btn-info" (click)="stopPipeline()" style="margin: 0 0.5em 0 0.5em;">
+        <app-bootstrap-icon iconName="bi-stop-fill" iconSize="1.5em"></app-bootstrap-icon>
+        Stop
+      </button>
+      <button *ngIf="canResetPipeline()" class="btn btn-primary" (click)="resetPipeline()" style="margin: 0 0.5em 0 0.5em;">
+        <app-bootstrap-icon iconName="bi-arrow-clockwise" iconSize="1.5em"></app-bootstrap-icon>
+        Reset
+      </button>
+    </div>
+    <div style="clear: both;"></div>
+    <p *ngIf="getDescription()" style="margin-top: 16px;" [innerHTML]="getDescription()"></p>
+    <hr />
+    <ng-container>
+      <div style="margin-bottom: 16px;">
+        <app-pipeline-source [observable]="getObservable()"></app-pipeline-source>
+      </div>
+    </ng-container>
+    <ng-container *ngFor="let operator of getOperators()">
+      <div style="margin-bottom: 16px;">
+        <app-operator [operator]="operator"></app-operator>
+      </div>
+    </ng-container>
+    <ng-container>
+      <app-observer [pipeline]="getPipeline()"></app-observer>
+    </ng-container>
+  </div>
+</div>

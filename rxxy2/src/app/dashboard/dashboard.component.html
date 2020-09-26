@@ -1,0 +1,11 @@
+<div style="width: 100%;">
+  <app-pipeline-builder (sourceCompiled)="onSourceCompiled($event)"></app-pipeline-builder>
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly;">
+    <ng-container *ngFor="let pipeline of getPipelines()">
+      <app-dashboard-pipeline [pipeline]="pipeline"></app-dashboard-pipeline>
+    </ng-container>
+    <ng-container *ngFor="let subject of getSubjects()">
+      <app-dashboard-subject [subject]="subject"></app-dashboard-subject>
+    </ng-container>
+  </div>
+</div>

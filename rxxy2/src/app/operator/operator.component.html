@@ -1,0 +1,25 @@
+<ng-container [ngSwitch]="getType()">
+  <ng-container *ngSwitchCase="'pause'">
+    <app-pipeline-event-list [events]="getEvents()" (eventResumed)="onEventResumed($event)"></app-pipeline-event-list>
+    <hr />
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <ngb-accordion [activeIds]="(isTopLevelOperator() ? 'panel-first' : '')">
+      <ngb-panel id="panel-first">
+        <ng-template ngbPanelTitle>
+          <span>
+            <app-bootstrap-icon [iconName]="getIconName()" iconSize="1.5em" style="margin-right: 0.5rem;"></app-bootstrap-icon>
+            {{ getType() }} ({{getEvents().length}} events)
+            <a href="{{ getHelpUrl() }}" target="_blank"><app-bootstrap-icon iconName="bi-question-circle-fill" style="margin-left: 0.5rem;"></app-bootstrap-icon></a>
+          </span>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <p class="code">{{ getText() }}</p>
+          <p *ngIf="getDescription()" style="margin-top: 16px;" [innerHTML]="getDescription()"></p>
+          <hr *ngIf="getEvents().length && isTopLevelOperator()" />
+          <app-pipeline-event-list [events]="getEventsSkipIncoming()"></app-pipeline-event-list>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </ng-container>
+</ng-container>
